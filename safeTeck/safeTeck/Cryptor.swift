@@ -54,27 +54,6 @@ public final class Cryptor {
         }
     }
     
-    private func setupCoreData() {
-        let modelName = "ModelCoreData"
-        let bundle = Bundle(for: type(of: self))
-        
-        guard let modelURL = bundle.url(forResource: modelName, withExtension: "momd") else {
-            fatalError("Failed to find model URL")
-        }
-        
-        guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
-            fatalError("Failed to create model from \(modelURL)")
-        }
-        
-        let container = NSPersistentContainer(name: modelName, managedObjectModel: mom)
-        container.loadPersistentStores { storeDescription, error in
-            if let error = error {
-                fatalError("Failed to load persistent stores: \(error)")
-            }
-            Cryptor.context = container.viewContext
-        }
-    }
-    
     /// Шифрует переданную строку и сохраняет её в базу данных
     public static func store(string: String) async throws {
         guard let context = context else {
@@ -97,9 +76,14 @@ public final class Cryptor {
             print("Failed to save encrypted string: \(error)")
         }
     }
-    
-    
-    private static func encryptString(_ inputString: String, using privateKey: P256.KeyAgreement.PrivateKey) throws -> Data {
+}
+
+private extension Cryptor {
+    /// MARK: - Шифровка/расшифровка
+    static func encryptString(
+        _ inputString: String,
+        using privateKey: P256.KeyAgreement.PrivateKey
+    ) throws -> Data {
         let inputData = Data(inputString.utf8)
         let sharedSecret = try privateKey.sharedSecretFromKeyAgreement(with: privateKey.publicKey)
         
@@ -108,14 +92,20 @@ public final class Cryptor {
         return encryptedData.combined ?? Data()
     }
     
-    private static func decryptData(_ data: Data, using privateKey: P256.KeyAgreement.PrivateKey) throws -> String {
+    static func decryptData(
+        _ data: Data,
+        using privateKey: P256.KeyAgreement.PrivateKey
+    ) throws -> String {
         let sharedSecret = try privateKey.sharedSecretFromKeyAgreement(with: privateKey.publicKey)
         let box = try AES.GCM.SealedBox(combined: data)
         let decryptSealedBox = try! AES.GCM.open(box, using: SymmetricKey(data: sharedSecret))
         return String(data: decryptSealedBox, encoding: .utf8)!
     }
     
-    private static func storePrivateKeyInKeychain(privateKey: P256.KeyAgreement.PrivateKey) throws {
+    /// MARK: - Работа с Keychain
+    static func storePrivateKeyInKeychain(
+        privateKey: P256.KeyAgreement.PrivateKey
+    ) throws {
         let keyData = privateKey.rawRepresentation
         
         let query: [String: Any] = [kSecClass as String: kSecClassKey,
@@ -129,7 +119,7 @@ public final class Cryptor {
         }
     }
     
-    private static func retrievePrivateKeyFromKeychain() throws -> P256.KeyAgreement.PrivateKey? {
+    static func retrievePrivateKeyFromKeychain() throws -> P256.KeyAgreement.PrivateKey? {
         let query: [String: Any] = [kSecClass as String: kSecClassKey,
                                     kSecAttrApplicationTag as String: keychainPrivateKeyTag,
                                     kSecAttrKeyType as String: kSecAttrKeyTypeECSECPrimeRandom,
@@ -149,5 +139,27 @@ public final class Cryptor {
         }
         
         return privateKey
+    }
+    
+    /// MARK: - Настройки CoreData
+    func setupCoreData() {
+        let modelName = "ModelCoreData"
+        let bundle = Bundle(for: type(of: self))
+        
+        guard let modelURL = bundle.url(forResource: modelName, withExtension: "momd") else {
+            fatalError("Failed to find model URL")
+        }
+        
+        guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
+            fatalError("Failed to create model from \(modelURL)")
+        }
+        
+        let container = NSPersistentContainer(name: modelName, managedObjectModel: mom)
+        container.loadPersistentStores { storeDescription, error in
+            if let error = error {
+                fatalError("Failed to load persistent stores: \(error)")
+            }
+            Cryptor.context = container.viewContext
+        }
     }
 }
