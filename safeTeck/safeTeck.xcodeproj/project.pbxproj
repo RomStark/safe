@@ -11,6 +11,8 @@
 		0039B7122ADEBA0F001E8D3B /* safeTeck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0039B7072ADEBA0F001E8D3B /* safeTeck.framework */; };
 		0039B7172ADEBA0F001E8D3B /* safeTeckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0039B7162ADEBA0F001E8D3B /* safeTeckTests.swift */; };
 		0039B7182ADEBA0F001E8D3B /* safeTeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 0039B70A2ADEBA0F001E8D3B /* safeTeck.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0039B7292ADEBD59001E8D3B /* Cryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0039B7282ADEBD59001E8D3B /* Cryptor.swift */; };
+		0039B72C2ADEBD90001E8D3B /* ModelCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0039B72A2ADEBD90001E8D3B /* ModelCoreData.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,8 @@
 		0039B70B2ADEBA0F001E8D3B /* safeTeck.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = safeTeck.docc; sourceTree = "<group>"; };
 		0039B7112ADEBA0F001E8D3B /* safeTeckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = safeTeckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0039B7162ADEBA0F001E8D3B /* safeTeckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = safeTeckTests.swift; sourceTree = "<group>"; };
+		0039B7282ADEBD59001E8D3B /* Cryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cryptor.swift; sourceTree = "<group>"; };
+		0039B72B2ADEBD90001E8D3B /* ModelCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelCoreData.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,7 @@
 		0039B6FD2ADEBA0F001E8D3B = {
 			isa = PBXGroup;
 			children = (
+				0039B72A2ADEBD90001E8D3B /* ModelCoreData.xcdatamodeld */,
 				0039B7092ADEBA0F001E8D3B /* safeTeck */,
 				0039B7152ADEBA0F001E8D3B /* safeTeckTests */,
 				0039B7082ADEBA0F001E8D3B /* Products */,
@@ -72,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				0039B70A2ADEBA0F001E8D3B /* safeTeck.h */,
+				0039B7282ADEBD59001E8D3B /* Cryptor.swift */,
 				0039B70B2ADEBA0F001E8D3B /* safeTeck.docc */,
 			);
 			path = safeTeck;
@@ -194,7 +200,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0039B72C2ADEBD90001E8D3B /* ModelCoreData.xcdatamodeld in Sources */,
 				0039B70C2ADEBA0F001E8D3B /* safeTeck.docc in Sources */,
+				0039B7292ADEBD59001E8D3B /* Cryptor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +404,7 @@
 		0039B71F2ADEBA0F001E8D3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X58ZVA4AH8;
@@ -412,6 +421,7 @@
 		0039B7202ADEBA0F001E8D3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X58ZVA4AH8;
@@ -456,6 +466,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0039B72A2ADEBD90001E8D3B /* ModelCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0039B72B2ADEBD90001E8D3B /* ModelCoreData.xcdatamodel */,
+			);
+			currentVersion = 0039B72B2ADEBD90001E8D3B /* ModelCoreData.xcdatamodel */;
+			path = ModelCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0039B6FE2ADEBA0F001E8D3B /* Project object */;
 }

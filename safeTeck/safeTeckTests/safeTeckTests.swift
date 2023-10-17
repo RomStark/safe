@@ -18,12 +18,20 @@ final class safeTeckTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testExample() async throws {
+        // Создаём массив из 100 рандомных строк
+        
+        let inputStrings = (0..<100).map { _ in UUID().uuidString }
+        let cryptor = Cryptor()
+        // Шифруем каждую строку и сохраняем
+        for string in inputStrings {
+            try await Cryptor.store(string: string)
+        }
+        // Получаем расшифрованные строки
+        let storedStrings = await cryptor.strings
+
+        // Проверяем, что исходный массив и расшифрованный массив совпадают
+        XCTAssertEqual(storedStrings, inputStrings)
     }
 
     func testPerformanceExample() throws {
